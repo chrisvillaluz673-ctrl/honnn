@@ -1,0 +1,278 @@
+/* ==========================================
+   1. RESET & VARIABLES SETUP
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --sand-color: #f7d6bf;
+    --sea-deep: #0077b6;
+    --sea-mid: #0096c7;
+    --sea-light: #00b4d8;
+    --parchment: #fcf5e5;
+    --burnt-edge: #d4a373;
+    --pink-heart: #fb6f92;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--sea-deep);
+    position: relative;
+}
+
+/* ==========================================
+   2. SEA & WAVES ANIMATION (THE BEACH) - PURE CSS FIXED
+   ========================================== */
+.sea-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #03045e, #0077b6, #00b4d8, #90e0ef, #f7d6bf);
+    z-index: 1;
+}
+
+/* Layered Waves gamit ang Pure CSS Border-Radius */
+.wave {
+    position: absolute;
+    bottom: -150px;
+    left: -50%;
+    width: 200%;
+    height: 380px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 43%;
+}
+
+.wave1 {
+    animation: waveRotation 14s infinite linear;
+    background: rgba(255, 255, 255, 0.2);
+    bottom: -110px;
+}
+
+.wave2 {
+    animation: waveRotation 9s infinite linear reverse;
+    background: rgba(144, 224, 239, 0.35);
+    bottom: -130px;
+    border-radius: 40%;
+}
+
+.wave3 {
+    animation: waveRotation 16s infinite linear;
+    background: rgba(0, 180, 216, 0.25);
+    bottom: -150px;
+    border-radius: 45%;
+}
+
+@keyframes waveRotation {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   3. INTERFACE HEADER LAYER (GLASSMORPHISM)
+   ========================================== */
+.beach-interface {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.header-glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 650px;
+    width: 100%;
+}
+
+.header-glass h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+}
+
+.header-glass p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* ==========================================
+   4. FLOATING BOTTLES ENGINE
+   ========================================== */
+.ocean-floor {
+    width: 100%;
+    flex-grow: 1;
+    position: relative;
+    margin-top: 40px;
+}
+
+.bottle {
+    position: absolute;
+    width: 55px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 15px 15px 10px 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08), inset -5px -5px 10px rgba(255,255,255,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bottle::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    width: 20px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.bottle::after {
+    content: '📜';
+    font-size: 1.2rem;
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
+}
+
+@keyframes floatX1 {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(8deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes floatX2 {
+    0% { transform: translateY(-10px) rotate(-5deg); }
+    50% { transform: translateY(10px) rotate(5deg); }
+    100% { transform: translateY(-10px) rotate(-5deg); }
+}
+
+.bottle:hover {
+    transform: scale(1.15) translateY(-5px) !important;
+    box-shadow: 0 15px 25px rgba(251, 111, 146, 0.3);
+    background: rgba(255, 175, 204, 0.4);
+    border-color: var(--pink-heart);
+}
+
+/* ==========================================
+   5. ROMANTIC ANCIENT SCROLL MODAL DISPLAY
+   ========================================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(3, 4, 94, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.4s ease;
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scroll-container {
+    perspective: 1000px;
+    width: 90%;
+    max-width: 480px;
+}
+
+.scroll-paper {
+    background: var(--parchment);
+    background-image: radial-gradient(var(--burnt-edge) 10%, transparent 11%);
+    background-size: 15px 15px;
+    background-color: #f4edd8;
+    padding: 40px 30px;
+    border-radius: 4px;
+    box-shadow: 5px 15px 35px rgba(0,0,0,0.4), 
+                inset 0 0 40px rgba(212, 163, 115, 0.5);
+    border-left: 12px solid #e9d8a6;
+    border-right: 12px solid #e9d8a6;
+    position: relative;
+    transform: rotateX(10deg);
+    animation: openScroll 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes openScroll {
+    from { transform: scaleY(0) rotateX(30deg); opacity: 0; }
+    to { transform: scaleY(1) rotateX(0deg); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2rem;
+    color: var(--burnt-edge);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover { color: #8338ec; }
+
+.scroll-content {
+    text-align: center;
+    color: #4a3b32;
+}
+
+.letter-heart {
+    font-size: 2.5rem;
+    color: var(--pink-heart);
+    margin-bottom: 20px;
+    animation: heartPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+#message-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* ==========================================
+   6. FOOTER ENGINE
+   ========================================== */
+footer {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    opacity: 0.7;
+    z-index: 10;
+    font-size: 0.85rem;
+}
